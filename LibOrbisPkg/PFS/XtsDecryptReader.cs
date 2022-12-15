@@ -108,28 +108,28 @@ namespace LibOrbisPkg.PFS
         DecryptSector(ctx, sectorBuf, (ulong)currentSector);
     }
 
-    private Ctx MakeCtx() => new Ctx
+    private Ctx MakeCtx()
     {
-      cipher = new AesManaged
-      {
-        Mode = CipherMode.ECB,
-        KeySize = 128,
-        Key = dataKey,
-        Padding = PaddingMode.None,
-        BlockSize = 128,
-      },
-      tweakCipher = new AesManaged
-      {
-        Mode = CipherMode.ECB,
-        KeySize = 128,
-        Key = tweakKey,
-        Padding = PaddingMode.None,
-        BlockSize = 128,
-      },
-      xor = new byte[16],
-      encryptedTweak = new byte[16],
-      tweak = new byte[16]
-    };
+      var cipher = Aes.Create();
+      cipher.Mode = CipherMode.ECB;
+      cipher.KeySize = 128;
+      cipher.Key = dataKey;
+      cipher.Padding = PaddingMode.None;
+      cipher.BlockSize = 128;
+      var tweakCipher = Aes.Create();
+      tweakCipher.Mode = CipherMode.ECB;
+      tweakCipher.KeySize = 128;
+      tweakCipher.Key = tweakKey;
+      tweakCipher.Padding = PaddingMode.None;
+      tweakCipher.BlockSize = 128;
+      return new Ctx {
+        cipher = cipher,
+        tweakCipher = tweakCipher,
+        xor = new byte[16],
+        encryptedTweak = new byte[16],
+        tweak = new byte[16]
+      };
+    }
 
     public void Read(long position, byte[] buffer, int offset, int count)
     {
