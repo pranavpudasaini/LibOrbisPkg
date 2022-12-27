@@ -113,13 +113,13 @@ namespace LibOrbisPkg.PFS
       var cipher = Aes.Create();
       cipher.Mode = CipherMode.ECB;
       cipher.KeySize = 128;
-      cipher.Key = dataKey;
+      if (dataKey != null) cipher.Key = dataKey;
       cipher.Padding = PaddingMode.None;
       cipher.BlockSize = 128;
       var tweakCipher = Aes.Create();
       tweakCipher.Mode = CipherMode.ECB;
       tweakCipher.KeySize = 128;
-      tweakCipher.Key = tweakKey;
+      if (tweakKey != null) tweakCipher.Key = tweakKey;
       tweakCipher.Padding = PaddingMode.None;
       tweakCipher.BlockSize = 128;
       return new Ctx {
