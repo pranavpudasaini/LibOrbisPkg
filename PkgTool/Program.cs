@@ -101,6 +101,30 @@ namespace PkgTool
           Gp4Creator.CreateProjectFromPKG(args[2], args[1], passcode);
         }),
       Verb.Create(
+        "pkg_listfiles",
+        "Extracts all the files from a PKG to the given output directory. Use the verbose flag to print filenames as they are extracted.",
+        ArgDef.Multi(ArgDef.Bool("verbose"), ArgDef.Option("passcode", "xts_tweak", "xts_data"), "input.pkg"),
+        (flags, optionals, args) =>
+        {
+          var pkgPath = args[1];
+          var passcode = optionals["passcode"];
+          Pkg pkg;
+
+          var mmf = MemoryMappedFile.CreateFromFile(pkgPath);
+          using (var s = mmf.CreateViewStream(0, 0, MemoryMappedFileAccess.Read))
+          {
+            pkg = new PkgReader(s).ReadPkg();
+          }
+          var ekpfs = EkPfsFromPasscode(pkg, passcode);
+          var outerPfsOffset = (long)pkg.Header.pfs_image_offset;
+          using(var acc = mmf.CreateViewAccessor(outerPfsOffset, (long)pkg.Header.pfs_image_size, MemoryMappedFileAccess.Read))
+          {
+            var outerPfs = new PfsReader(acc, pkg.Header.pfs_flags, ekpfs, optionals["xts_tweak"]?.FromHexCompact(), optionals["xts_data"]?.FromHexCompact());
+            var inner = new PfsReader(new PFSCReader(outerPfs.GetFile("pfs_image.dat").GetView()));
+            ListInParallel(inner);
+          }
+        }),
+      Verb.Create(
         "pkg_extract",
         "Extracts all the files from a PKG to the given output directory. Use the verbose flag to print filenames as they are extracted.",
         ArgDef.Multi(ArgDef.Bool("verbose"), ArgDef.Option("passcode", "xts_tweak", "xts_data"), "input.pkg", "output_directory"),
@@ -123,6 +147,20 @@ namespace PkgTool
             var outerPfs = new PfsReader(acc, pkg.Header.pfs_flags, ekpfs, optionals["xts_tweak"]?.FromHexCompact(), optionals["xts_data"]?.FromHexCompact());
             var inner = new PfsReader(new PFSCReader(outerPfs.GetFile("pfs_image.dat").GetView()));
             ExtractInParallel(inner, outPath, flags["verbose"]);
+          }
+        }),
+      Verb.Create(
+        "pfs_listfiles",
+        "Extracts all the files from a PFS image to the given output directory. Use the verbose flag to print filenames as they are extracted.",
+        ArgDef.Multi(ArgDef.Bool("verbose"), "input.dat"),
+        (flags, args) =>
+        {
+          var pfsPath = args[1];
+          using(var mmf = MemoryMappedFile.CreateFromFile(pfsPath))
+          using(var acc = mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read))
+          {
+            var pfs = new PfsReader(acc);
+            ListInParallel(pfs);
           }
         }),
       Verb.Create(
@@ -509,6 +547,15 @@ namespace PkgTool
           Console.WriteLine("PkgTool version " + version);
         }),
     };
+
+    private static void ListInParallel(PfsReader inner) {
+      // Console.WriteLine("Listing in parallel...");
+      Parallel.ForEach(
+        inner.GetAllFiles(),
+        (f, _) => {
+          Console.WriteLine(f.FullName);
+        });
+    }
 
     private static void ExtractInParallel(PfsReader inner, string outPath, bool verbose)
     {
