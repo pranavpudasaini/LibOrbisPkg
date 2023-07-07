@@ -8,7 +8,7 @@ The original developer (maxton) has passed away unexpectedly, we will be keeping
 
 I am developing an open source library for reading and writing PS4 PKG files.
 This project's goal is to eliminate the need to use proprietary SDK tools.
-Without a proper open PKG tool, the PS4 homebrew scene cannot flourish. 
+Without a proper open PKG tool, the PS4 homebrew scene cannot flourish.
 
 All code in this repository is licensed under the GNU LGPL version 3, which can be found in LICENSE.txt.
 
@@ -16,6 +16,10 @@ All code in this repository is licensed under the GNU LGPL version 3, which can 
 The latest builds are available to download at [AppVeyor](https://ci.appveyor.com/project/maxton/liborbispkg/build/artifacts).
 
 ## Usage
+
+For non-windows platforms, compile and use only the `.Core` projects. This can be achieved using the alternative root solution file using this CLI method: `dotnet build LibOrbisPkg.Core.sln`.
+
+For Windows, which includes the PkgEditor GUI project as well, you can use this CLI command: `dotnet build LibOrbisPkg.sln`, or build it in Visual Studio.
 
 ### PkgEditor
 PkgEditor is a GUI tool with which you can edit GP4 projects, create and edit SFO files, and build PKG and PFS archives.
