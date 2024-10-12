@@ -15,7 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PkgTool.Core", "PkgTool.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PkgEditor.Core", "PkgEditor.Core\PkgEditor.Core.csproj", "{DE7A5467-7A24-40FF-83C7-ED78BC130239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibOrbisPkgTests", "LibOrbisPkgTests\LibOrbisPkgTests.csproj", "{F0395E86-84DF-4FA7-A9EB-74FC08935AB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibOrbisPkgTests", "LibOrbisPkgTests\LibOrbisPkgTests.csproj", "{F0395E86-84DF-4FA7-A9EB-74FC08935AB6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4873019B-B822-40C9-8AB8-8E6BD25EF07D}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
