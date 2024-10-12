@@ -65,6 +65,8 @@ namespace LibOrbisPkgTests
         sfo.Write(ms);
         ms.Seek(0, SeekOrigin.Begin);
         var sfo2 = ParamSfo.FromStream(ms);
+
+        Assert.IsNotNull(sfo2);
         Assert.AreEqual((sfo2["KEY1"] as IntegerValue).Value, 1234);
         Assert.AreEqual((sfo2["KEY2"] as Utf8Value).Value, "This is the title");
         Assert.AreEqual((sfo2["KEY3"] as Utf8SpecialValue).Value, "This is a special string");
