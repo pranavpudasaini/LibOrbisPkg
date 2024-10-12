@@ -18,7 +18,7 @@ namespace LibOrbisPkgTests
   {
     private static byte[] TestFile = new byte[] { 1, 2, 3, 4, 255, 255, 0, 0 };
     private TempFile pkgFile;
-    private PkgProperties props;
+    private PkgProperties? props;
 
     [TestInitialize]
     public void Initialize()
