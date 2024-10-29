@@ -24,3 +24,14 @@ jobs:
         echo -e "Listing Files:\n"
         ls -la
         echo "**************************"
+    - name: Release artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: LibOrbisPkg
+        path: |
+          .\PkgEditor\*
+          .\PkgTool\*
+          .\LibOrbisPkg\*
+          .\PkgEditor.Core\*
+          .\PkgTool.Core\*
+          .\LibOrbisPkg.Core\*
