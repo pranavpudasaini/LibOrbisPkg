@@ -29,9 +29,9 @@ jobs:
       with:
         name: LibOrbisPkg
         path: |
-          .\PkgEditor\*
-          .\PkgTool\*
-          .\LibOrbisPkg\*
-          .\PkgEditor.Core\*
-          .\PkgTool.Core\*
-          .\LibOrbisPkg.Core\*
+          .\LibOrbis\PkgEditor\*
+          .\LibOrbis\PkgTool\*
+          .\LibOrbis\LibOrbisPkg\*
+          .\LibOrbis\PkgEditor.Core\*
+          .\LibOrbis\PkgTool.Core\*
+          .\LibOrbis\LibOrbisPkg.Core\*
