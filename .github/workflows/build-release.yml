@@ -1,0 +1,25 @@
+name: Build project and upload artifact
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Build
+      run: dotnet build LibOrbisPkg.Core.sln
+    - name: Release Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: PkgEditor-*.zip
+        path: |
+          .\PkgEditor\bin\Release\PkgEditor.exe
+          .\PkgEditor\bin\Release\LibOrbisPkg.dll.exe
+          .\PkgEditor\bin\Release\README.md
+          .\PkgEditor\bin\Release\LICENSE.txt
