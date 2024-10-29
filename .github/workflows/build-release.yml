@@ -8,24 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Build
       run: dotnet build LibOrbisPkg.sln
-    - name: List files
-      shell: bash
-      run: |
-        echo "**************************"
-        echo "DEBUGGING"
-        echo "**************************"
-        echo "Current directory: " $(pwd)
-        echo -e "Listing Files:\n"
-        ls -la
-        echo -e "\n\nTree:\n"
-        tree
-        echo "**************************"
     - name: Release artifacts
       uses: actions/upload-artifact@v4
       with:
