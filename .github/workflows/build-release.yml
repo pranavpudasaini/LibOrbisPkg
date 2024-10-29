@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Build
-      run: dotnet build LibOrbisPkg.Core.sln
+      run: dotnet build LibOrbisPkg.sln
     - name: List files
       shell: bash
       run: |
@@ -31,4 +31,9 @@ jobs:
       with:
         name: LibOrbisPkg
         path: |
-          .\LibOrbisPkg\*
+          .\LibOrbis\PkgEditor\*
+          .\LibOrbis\PkgTool\*
+          .\LibOrbis\LibOrbisPkg\*
+          .\LibOrbis\PkgEditor.Core\*
+          .\LibOrbis\PkgTool.Core\*
+          .\LibOrbis\LibOrbisPkg.Core\*
